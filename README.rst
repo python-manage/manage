@@ -28,7 +28,18 @@ A "manage" command to add an interactive shell and commands support to your Pyth
 Features
 --------
 
-* TODO
+With **click_manage** you add a commands manager to your Python project and
+also it comes with an interactive shell with iPython support.
+
+.. code-block:: console
+
+    $ pip install click_manage
+    $ cd /my_project_root_folder
+    $ manage init
+    creating manage.yml....
+
+With that you now have a file **manage.yml** file describing how **manage** command should discovery your app modules and custom commands
+
 
 Credits
 ---------

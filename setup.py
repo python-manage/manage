@@ -23,7 +23,10 @@ test_requirements = [
 setup(
     name='click_manage',
     version='0.1.0',
-    description="A "manage" command to add an interactive shell and commands support to your Python applications, based on click",
+    description=(
+        "A 'manage' command to add an interactive shell and commands support "
+        "to your Python applications, based on click"
+    ),
     long_description=readme + '\n\n' + history,
     author="Bruno Rocha",
     author_email='rochacbruno@gmail.com',
