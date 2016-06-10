@@ -48,26 +48,26 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## check style with flake8
-	flake8 click_manage tests
+	flake8 manage tests
 
 test: ## run tests quickly with the default Python
 	py.test
-	
+
 
 test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source click_manage py.test
-	
+	coverage run --source manage py.test
+
 		coverage report -m
 		coverage html
 		$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/click_manage.rst
+	rm -f docs/manage.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ click_manage
+	sphinx-apidoc -o docs/ manage
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

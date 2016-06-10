@@ -2,7 +2,7 @@
 deploy:
   true:
     condition: $TOXENV == py27
-    repo: rochacbruno/click_manage
+    repo: rochacbruno/manage
     tags: true
   distributions: sdist bdist_wheel
   password:

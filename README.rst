@@ -1,20 +1,20 @@
 ===============================
-Click Manage
+Manage
 ===============================
 
 
-.. image:: https://img.shields.io/pypi/v/click_manage.svg
-        :target: https://pypi.python.org/pypi/click_manage
+.. image:: https://img.shields.io/pypi/v/manage.svg
+        :target: https://pypi.python.org/pypi/manage
 
-.. image:: https://img.shields.io/travis/rochacbruno/click_manage.svg
-        :target: https://travis-ci.org/rochacbruno/click_manage
+.. image:: https://img.shields.io/travis/rochacbruno/manage.svg
+        :target: https://travis-ci.org/rochacbruno/manage
 
-.. image:: https://readthedocs.org/projects/click-manage/badge/?version=latest
-        :target: https://click-manage.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/manage/badge/?version=latest
+        :target: https://manage.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://requires.io/github/rochacbruno/click_manage/requirements.svg?branch=master
-        :target: https://requires.io/github/rochacbruno/click_manage/requirements?branch=master
+.. image:: https://requires.io/github/rochacbruno/manage/requirements.svg?branch=master
+        :target: https://requires.io/github/rochacbruno/manage/requirements?branch=master
         :alt: Dependencies
 
 
@@ -22,18 +22,18 @@ A "manage" command to add an interactive shell and commands support to your Pyth
 
 
 * Free software: ISC license
-* Documentation: https://click-manage.readthedocs.io.
+* Documentation: https://manage.readthedocs.io.
 
 
 Features
 --------
 
-With **click_manage** you add a commands manager to your Python project and
+With **manage** you add a commands manager to your Python project and
 also it comes with an interactive shell with iPython support.
 
 .. code-block:: console
 
-    $ pip install click_manage
+    $ pip install manage
     $ cd /my_project_root_folder
     $ manage init
     creating manage.yml....

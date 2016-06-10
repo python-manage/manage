@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install Click Manage, run this command in your terminal:
+To install Manage, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install click_manage
+    $ pip install manage
 
-This is the preferred method to install Click Manage, as it will always install the most recent stable release. 
+This is the preferred method to install Manage, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,19 +26,19 @@ you through the process.
 From sources
 ------------
 
-The sources for Click Manage can be downloaded from the `Github repo`_.
+The sources for Manage can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/rochacbruno/click_manage
+    $ git clone git://github.com/rochacbruno/manage
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/rochacbruno/click_manage/tarball/master
+    $ curl  -OL https://github.com/rochacbruno/manage/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/rochacbruno/click_manage
-.. _tarball: https://github.com/rochacbruno/click_manage/tarball/master
+.. _Github repo: https://github.com/rochacbruno/manage
+.. _tarball: https://github.com/rochacbruno/manage/tarball/master

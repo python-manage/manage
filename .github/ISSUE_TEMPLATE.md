@@ -1,4 +1,4 @@
-* Click Manage version:
+* Manage version:
 * Python version:
 * Operating System:
 

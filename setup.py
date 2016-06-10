@@ -21,7 +21,7 @@ test_requirements = [
 ]
 
 setup(
-    name='click_manage',
+    name='manage',
     version='0.1.0',
     description=(
         "A 'manage' command to add an interactive shell and commands support "
@@ -30,22 +30,19 @@ setup(
     long_description=readme + '\n\n' + history,
     author="Bruno Rocha",
     author_email='rochacbruno@gmail.com',
-    url='https://github.com/rochacbruno/click_manage',
-    packages=[
-        'click_manage',
-    ],
-    package_dir={'click_manage':
-                 'click_manage'},
+    url='https://github.com/rochacbruno/manage',
+    packages=['manage'],
+    package_dir={'manage': 'manage'},
     entry_points={
         'console_scripts': [
-            'click_manage=click_manage.cli:main'
+            'manage=manage.cli:main'
         ]
     },
     include_package_data=True,
     install_requires=requirements,
     license="ISC license",
     zip_safe=False,
-    keywords='click_manage',
+    keywords='manage',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

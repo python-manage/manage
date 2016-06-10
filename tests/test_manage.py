@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-test_click_manage
+test_manage
 ----------------------------------
 
-Tests for `click_manage` module.
+Tests for `manage` module.
 """
 
 import pytest
@@ -13,11 +13,11 @@ import pytest
 from contextlib import contextmanager
 from click.testing import CliRunner
 
-from click_manage import click_manage
-from click_manage import cli
+from manage import manage
+from manage import cli
 
 
-class TestClick_manage(object):
+class TestManage(object):
 
     @classmethod
     def setup_class(cls):
@@ -29,7 +29,7 @@ class TestClick_manage(object):
         runner = CliRunner()
         result = runner.invoke(cli.main)
         assert result.exit_code == 0
-        assert 'click_manage.cli.main' in result.output
+        assert 'manage.cli.main' in result.output
         help_result = runner.invoke(cli.main, ['--help'])
         assert help_result.exit_code == 0
         assert '--help  Show this message and exit.' in help_result.output

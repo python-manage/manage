@@ -1,7 +1,7 @@
-click_manage
-============
+manage
+======
 
 .. toctree::
    :maxdepth: 4
 
-   click_manage
+   manage
