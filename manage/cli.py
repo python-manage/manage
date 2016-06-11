@@ -7,9 +7,14 @@ import click
 import readline
 import importlib
 import rlcompleter
-from .template import manage_dict
+from .template import default_manage_dict
 
 MANAGE_FILE = 'manage.yml'
+if os.path.exists(MANAGE_FILE):
+    with open(MANAGE_FILE) as manage_file:
+        manage_dict = yaml.load(manage_file)
+else:
+    manage_dict = default_manage_dict
 
 
 @click.group()
@@ -28,7 +33,8 @@ class DynamicImporter(object):
 
 
 @core_cmd.command()
-def init():
+@click.option('--banner')
+def init(banner):
     """Initialize a manage shell in current directory
         $ manage init --banner="My awesome app shell"
         initializing manage...
@@ -42,7 +48,8 @@ def init():
             "Copy the file"
 
     with open(MANAGE_FILE, 'w') as manage_file:
-        data = manage_dict
+        data = default_manage_dict
+        data['shell']['banner']['message'] = banner
         manage_file.write(yaml.dump(data, default_flow_style=False))
 
 
@@ -56,9 +63,12 @@ def shell(ipython):
     }
     _vars.update(auto_imported)
     banner_msg = (
-        'Welcome to PROGRAM interactive shell\n'
-        '\tAuto imported: {0}\n'
-    ).format(auto_imported.keys())
+        '{banner_message}\n'
+        '\tAuto imported: {auto_imported}\n'
+    ).format(
+        auto_imported=auto_imported.keys(),
+        banner_message=manage_dict['shell']['banner']['message']
+    )
     readline.set_completer(rlcompleter.Completer(_vars).complete)
     readline.parse_and_bind('tab: complete')
     try:

@@ -1,4 +1,4 @@
-manage_dict = {
+default_manage_dict = {
     'shell': {
         'banner': {
             'enabled': True,
