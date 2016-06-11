@@ -9,7 +9,9 @@ import importlib
 import rlcompleter
 from .template import default_manage_dict
 
+
 MANAGE_FILE = 'manage.yml'
+
 if os.path.exists(MANAGE_FILE):
     with open(MANAGE_FILE) as manage_file:
         manage_dict = yaml.load(manage_file)
@@ -41,8 +43,7 @@ def init(banner):
         creating manage.yml
     """
     if os.path.exists(MANAGE_FILE):
-        if not click.confirm(
-            'Do you want to rewrite manage.yml?'):
+        if not click.confirm('Do you want to rewrite manage.yml?'):
             return
         else:
             "Copy the file"

@@ -8,12 +8,11 @@ test_manage
 Tests for `manage` module.
 """
 
-import pytest
+# import pytest
 
-from contextlib import contextmanager
+# from contextlib import contextmanager
 from click.testing import CliRunner
 
-from manage import manage
 from manage import cli
 
 
@@ -25,6 +24,7 @@ class TestManage(object):
 
     def test_something(self):
         pass
+
     def test_command_line_interface(self):
         runner = CliRunner()
         result = runner.invoke(cli.main)
@@ -37,4 +37,3 @@ class TestManage(object):
     @classmethod
     def teardown_class(cls):
         pass
-
