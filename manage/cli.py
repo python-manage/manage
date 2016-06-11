@@ -7,7 +7,7 @@ import click
 import readline
 import importlib
 import rlcompleter
-from .template import default_manage_dict
+from manage.template import default_manage_dict
 
 
 MANAGE_FILE = 'manage.yml'
@@ -36,22 +36,28 @@ class DynamicImporter(object):
 
 @core_cmd.command()
 @click.option('--banner')
-def init(banner):
+@click.option('--hidden/--no-hidden', default=False)
+@click.option('--backup/--no-backup', default=False)
+def init(banner, hidden, backup):
     """Initialize a manage shell in current directory
         $ manage init --banner="My awesome app shell"
         initializing manage...
         creating manage.yml
     """
-    if os.path.exists(MANAGE_FILE):
-        if not click.confirm('Do you want to rewrite manage.yml?'):
+    manage_file = '.{0}'.format(MANAGE_FILE) if hidden else MANAGE_FILE
+    if os.path.exists(manage_file):
+        if not click.confirm('Rewrite {0}?'.format(manage_file)):
             return
-        else:
-            "Copy the file"
 
-    with open(MANAGE_FILE, 'w') as manage_file:
+    if backup:
+        bck = '.bck_{0}'.format(manage_file)
+        with open(manage_file, 'r') as source, open(bck, 'w') as bck_file:
+            bck_file.write(source.read())
+
+    with open(manage_file, 'w') as output:
         data = default_manage_dict
         data['shell']['banner']['message'] = banner
-        manage_file.write(yaml.dump(data, default_flow_style=False))
+        output.write(yaml.dump(data, default_flow_style=False))
 
 
 @core_cmd.command()

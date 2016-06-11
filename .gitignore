@@ -59,3 +59,4 @@ docs/_build/
 target/
 
 manage.yml
+.manage.yml
