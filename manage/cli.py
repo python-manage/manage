@@ -96,8 +96,9 @@ def debug(config):
 
 @cli.command()
 @click.option('--ipython/--no-ipython', default=True)
+@click.option('--ptpython', default=False, is_flag=True)
 @pass_config
-def shell(config, ipython):
+def shell(config, ipython, ptpython):
     """Runs a Python shell with context"""
     manage_dict = config.manage_dict
     _vars = globals()
@@ -124,6 +125,14 @@ def shell(config, ipython):
 
     exec_init(manage_dict, _vars)
     exec_init_script(manage_dict, _vars)
+
+    if ptpython:
+        try:
+            from ptpython.repl import embed
+            embed({}, _vars)
+        except ImportError:
+            click.echo("ptpython is not installed!")
+        return
 
     try:
         if ipython is True:

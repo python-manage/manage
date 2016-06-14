@@ -54,8 +54,10 @@ already have your project's common objects available.
 
 Also you can specify a custom function to run or a string based code block to run, useful to init and configure the objects.
 
-If **prompt-toolkit** is installed **manage shell** will load it
+If **ptpython** is installed **manage shell** will load it
+
 If **IPython** is installed **manage shell** loads it
+
 Else will use the **default Python console** including support for autocomplete.
 
 Check the example in: https://github.com/rochacbruno/manage/tree/master/examples/simple
