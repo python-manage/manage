@@ -85,7 +85,7 @@ Edit the file :code:`manage.yml` with the following content::
                        - b
                    kwargs:
                        foo: bar
-           init_script: -
+           init_script: |
                from foo import bar
                bar.configure()
 
