@@ -72,8 +72,8 @@ e.g: A command to add users to your system::
 
 **manage** has two ways for you to define custom commands
 
-Using a custom command module (single file)
--------------------------------------------
+1. Using a custom command module (single file)
+----------------------------------------------
 
 Lets say you have a commands module in your application, you write your custom command there and **manage** will load it
 
@@ -227,7 +227,50 @@ Now you run **manage --help** and you can see all the commands in the same modul
     shell        Runs a Python shell with context
 
 
+2. Defining your inline commands in manage file directly
+--------------------------------------------------------
 
+Sometimes your command is so simple that you do not want (or can't) have a custom module,
+so you can put all your commands in yaml file directly.
+
+.. code-block:: yaml
+
+  inline_commands:
+    - name: create_user
+      help: Creates a new user, calling any callable in path
+      module: mysystem.users.create
+      options:
+        - name:
+            required: true
+        - passwd:
+            required: true
+        - group:
+            default: admin
+    - name: clear_cache
+      help: Executes inline code to clear the cache
+      code: |
+        from mysystem import cache
+        cache.clear()
+
+Now running **manage --help**
+
+.. code-block:: console
+
+  $ manage --help
+  ...
+  Commands:
+    create_user  Creates a new user, calling any callable in path
+    clear_cache  Executes inline code to clear the cache
+    debug        Shows the parsed manage file
+    init         Initialize a manage shell in current...
+    shell        Runs a Python shell with context
+
+
+Further Explanations
+====================
+
+- You can say, **how this is useful?**, There's no need to get a separate package and configure everything in yaml, just use iPython to do it. Besides, IPython configuration has a lot more options and capabilities.
+- So I say: Nice! **If you don't like it, dont't use it!**
 
 Credits
 =======
