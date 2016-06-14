@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
+import sys
 import code
 import json
 import yaml
@@ -12,39 +13,65 @@ from manage.auto_import import import_objects, exec_init, exec_init_script
 
 MANAGE_FILE = 'manage.yml'
 HIDDEN_MANAGE_FILE = '.{0}'.format(MANAGE_FILE)
+MANAGE_DICT = {}
 
 
-def load_manage_dict():
-    if os.path.exists(MANAGE_FILE):
-        manage_filename = MANAGE_FILE
-    elif os.path.exists(HIDDEN_MANAGE_FILE):
-        manage_filename = HIDDEN_MANAGE_FILE
-    else:
-        return default_manage_dict
-    with open(manage_filename) as manage_file:
-        return yaml.load(manage_file)
+def load_manage_dict(filename=None):
+    manage_filename = None
+    if not MANAGE_DICT:
+        if filename:
+            manage_filename = filename
+        elif os.path.exists(MANAGE_FILE):
+            manage_filename = MANAGE_FILE
+        elif os.path.exists(HIDDEN_MANAGE_FILE):
+            manage_filename = HIDDEN_MANAGE_FILE
+        else:
+            MANAGE_DICT.update(default_manage_dict)
+
+        if manage_filename:
+            with open(manage_filename) as manage_file:
+                MANAGE_DICT.update(yaml.load(manage_file))
+
+    return MANAGE_DICT
 
 
-manage_dict = load_manage_dict()
+class Config(object):
+
+    def __init__(self):
+        self.filename = None
+        self._manage_dict = None
+
+    @property
+    def manage_dict(self):
+        if not self._manage_dict:
+            self._manage_dict = load_manage_dict(self.filename)
+        return self._manage_dict
 
 
-@click.group()
-def core_cmd():
+pass_config = click.make_pass_decorator(Config, ensure=True)
+
+
+@click.group(no_args_is_help=False)
+@click.option('--filename', type=click.Path())
+@pass_config
+def cli(config, filename):
     """ Core commands wrapper """
-    pass
+    config.filename = filename
 
 
-@core_cmd.command()
+@cli.command()
 @click.option('--banner')
 @click.option('--hidden/--no-hidden', default=False)
 @click.option('--backup/--no-backup', default=True)
-def init(banner, hidden, backup):
+@pass_config
+def init(config, banner, hidden, backup):
     """Initialize a manage shell in current directory
         $ manage init --banner="My awesome app shell"
         initializing manage...
         creating manage.yml
     """
-    manage_file = HIDDEN_MANAGE_FILE if hidden else MANAGE_FILE
+    manage_file = config.filename or (
+        HIDDEN_MANAGE_FILE if hidden else MANAGE_FILE)
     if os.path.exists(manage_file):
         if not click.confirm('Rewrite {0}?'.format(manage_file)):
             return
@@ -60,16 +87,19 @@ def init(banner, hidden, backup):
         output.write(yaml.dump(data, default_flow_style=False))
 
 
-@core_cmd.command()
-def debug():
+@cli.command()
+@pass_config
+def debug(config):
     """Shows the parsed manage file"""
-    print(json.dumps(manage_dict, indent=2))
+    print(json.dumps(config.manage_dict, indent=2))
 
 
-@core_cmd.command()
+@cli.command()
 @click.option('--ipython/--no-ipython', default=True)
-def shell(ipython):
+@pass_config
+def shell(config, ipython):
     """Runs a Python shell with context"""
+    manage_dict = config.manage_dict
     _vars = globals()
     _vars.update(locals())
     auto_imported = import_objects(manage_dict)
@@ -109,13 +139,31 @@ def shell(ipython):
         shell.interact(banner=banner_msg)
 
 
-main = click.CommandCollection(
-    help=manage_dict.get(
-        'help_text', '{project_name} Interactive shell!'
-    ).format(**manage_dict)
-)
+@click.command()
+def foo():
+    """do nothing"""
+    print("foo")
 
-main.add_source(core_cmd)
+
+def load_manage_dict_from_sys_args():
+    single_option = [item for item in sys.argv if '--filename=' in item]
+    if single_option:
+        filename = single_option[0].split('=')[-1]
+    elif '--filename' in sys.argv:
+        filename = sys.argv[sys.argv.index('--filename') + 1]
+    else:
+        filename = None
+    load_manage_dict(filename)
+
+
+def main():
+    load_manage_dict_from_sys_args()
+    cli.help = MANAGE_DICT.get(
+        'help_text', '{project_name} Interactive shell!'
+    ).format(**MANAGE_DICT)
+    cli.add_command(foo, name='bla')
+    return cli()
+
 
 if __name__ == '__main__':
     main()

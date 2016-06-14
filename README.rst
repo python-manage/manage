@@ -38,7 +38,7 @@ also it comes with an interactive shell with iPython support.
     $ manage init
     creating manage.yml....
 
-With that you now have a file **manage.yml** file describing how **manage** command should discovery your app modules and custom commands
+With that you now have a file **manage.yml** file describing how **manage** command should discover your app modules and custom commands
 
 The Shell
 ---------
