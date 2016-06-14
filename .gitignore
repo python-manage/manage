@@ -58,5 +58,5 @@ docs/_build/
 # PyBuilder
 target/
 
-manage.yml
-.manage.yml
+/manage.yml
+/.manage.yml

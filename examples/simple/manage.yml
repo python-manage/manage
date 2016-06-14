@@ -1,0 +1,47 @@
+project_name: My Simple Project
+help_text: |
+  This is the {project_name} interactive shell
+  You can have commands or open the shell
+shell:
+  readline_enabled: true
+  banner:
+    enabled: true
+    message: 'Hello {project_name} World'
+  auto_import:
+    display: true
+    objects:
+      manage.utils.import_string:
+      os.path:
+        as: path
+        init:
+          exists:
+            kwargs:
+              path: /tmp
+        init_script: |
+          print("path object is:")
+          print(type(path))
+          print("Hello path from init_script")
+      sys.path:
+        as: sp
+        init:
+          insert:
+            args:
+              - 0
+              - /tmp/add_on_object_init
+        init_script: |
+          def function():
+              assert isinstance(sp, list)
+              return type(sp)
+          print(function())
+  init:
+    sys.path.append:
+      args:
+        - /tmp/added_on_shell_init
+  init_script: |
+    # add a path to sys.path
+    import sys
+    sys.path.append('/tmp/added_on_shell_init_script')
+    assert '/tmp/added_on_shell_init' in sys.path
+    assert '/tmp/add_on_object_init' in sys.path
+    assert '/tmp/added_on_shell_init_script' in sys.path
+
