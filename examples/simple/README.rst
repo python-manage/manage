@@ -59,7 +59,7 @@ and it can be used as:
 .. code-block:: console
 
   $ cd examples/simple/
-  $ manage
+  $ manage --help
   Usage: manage [OPTIONS] COMMAND [ARGS]...
 
   This is the My Simple Project interactive shell You can have commands or
@@ -74,7 +74,7 @@ and it can be used as:
     shell  Runs a Python shell with context
 
 
-And the shell acording to defined attributes in **manage.yml**:
+And the shell according to defined attributes in **manage.yml**:
 
 .. code-block:: console
 

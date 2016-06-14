@@ -24,8 +24,7 @@ setup(
     name='manage',
     version='0.1.1',
     description=(
-        "A 'manage' command to add an interactive shell and commands support "
-        "to your Python applications, based on click"
+        "Command Line Manager + Interactive Shell for Python Projects"
     ),
     long_description=readme + '\n\n' + history,
     author="Bruno Rocha",

@@ -55,7 +55,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Click Manage'
+project = u'Manage'
 copyright = u"2016, Bruno Rocha"
 
 # The version info for the project you're documenting, acts as replacement
@@ -209,7 +209,7 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'manage.tex',
-     u'Click Manage Documentation',
+     u'Manage Documentation',
      u'Bruno Rocha', 'manual'),
 ]
 
@@ -240,7 +240,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'manage',
-     u'Click Manage Documentation',
+     u'Manage Documentation',
      [u'Bruno Rocha'], 1)
 ]
 
@@ -255,10 +255,10 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'manage',
-     u'Click Manage Documentation',
+     u'Manage Documentation',
      u'Bruno Rocha',
      'manage',
-     'One line description of project.',
+     'Command Line Manager + Interactive Shell for Python Projects.',
      'Miscellaneous'),
 ]
 
