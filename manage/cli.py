@@ -26,12 +26,18 @@ def load_manage_dict(filename=None):
         elif os.path.exists(HIDDEN_MANAGE_FILE):
             manage_filename = HIDDEN_MANAGE_FILE
         else:
+            default_manage_dict['shell']['banner']['message'] = (
+                "WARNING: This is not a managed project\n"
+                "\tPlease `exit()` and \n"
+                "\trun `$ manage init`\n"
+                "\tand edit `manage.yml` file with desired options"
+            )
+            default_manage_dict['shell']['auto_import']['display'] = False
             MANAGE_DICT.update(default_manage_dict)
 
         if manage_filename:
             with open(manage_filename) as manage_file:
                 MANAGE_DICT.update(yaml.load(manage_file))
-
     return MANAGE_DICT
 
 
@@ -83,7 +89,8 @@ def init(config, banner, hidden, backup):
 
     with open(manage_file, 'w') as output:
         data = default_manage_dict
-        data['shell']['banner']['message'] = banner
+        if banner:
+            data['shell']['banner']['message'] = banner
         output.write(yaml.dump(data, default_flow_style=False))
 
 
@@ -110,7 +117,7 @@ def shell(config, ipython, ptpython):
         msgs.append(
             manage_dict['shell']['banner']['message'].format(**manage_dict)
         )
-    if manage_dict['shell']['auto_import']['display']:
+    if auto_imported and manage_dict['shell']['auto_import']['display']:
         auto_imported_names = [
             key for key in auto_imported.keys()
             if key not in ['__builtins__', 'builtins']
@@ -170,7 +177,8 @@ def main():
     cli.help = MANAGE_DICT.get(
         'help_text', '{project_name} Interactive shell!'
     ).format(**MANAGE_DICT)
-    cli.add_command(foo, name='bla')
+    # TODO: Load commands
+    # cli.add_command(foo, name='bla')
     return cli()
 
 
