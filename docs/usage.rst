@@ -2,6 +2,5 @@
 Usage
 =====
 
-To use Manage in a project::
+.. include:: ../examples/simple/README.rst
 
-    import manage

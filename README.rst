@@ -54,43 +54,7 @@ Also you can specify a custom function to run or a string based code block to ru
 
 If **IPython** is installed it will use it, otherwise will use the default Python console including support for tab autocomplete.
 
-Lets see an example:
-
-Edit the file :code:`manage.yml` with the following content::
-
-    ---
-    shell:
-       readline_enabled: true
-       banner:
-           enabled: true
-           envvars: true
-           message: "{USER}, welcome to my Shell!"
-       auto_import:
-           display: true
-           objects:
-               myapp.module.Class:
-               myapp.module.object:
-                   as: obj
-                   init:
-                       configure:
-                            args:
-                                - a
-                                - b
-                            kwargs:
-                                foo: bar
-           init:
-               myapp.initialization.start:
-                   args:
-                       - a
-                       - b
-                   kwargs:
-                       foo: bar
-           init_script: |
-               from foo import bar
-               bar.configure()
-
-
-Then the above configurations will give you the :code:`manage shell` as in the picture below
+Check the example in: https://github.com/rochacbruno/manage/tree/master/examples/simple
 
 
 Custom Commands

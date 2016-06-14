@@ -4,6 +4,14 @@ manage package
 Submodules
 ----------
 
+manage.auto_import module
+-------------------------
+
+.. automodule:: manage.auto_import
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 manage.cli module
 -----------------
 
@@ -12,10 +20,26 @@ manage.cli module
     :undoc-members:
     :show-inheritance:
 
-manage.manage module
---------------------
+manage.commands_collector module
+--------------------------------
 
-.. automodule:: manage.manage
+.. automodule:: manage.commands_collector
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+manage.template module
+----------------------
+
+.. automodule:: manage.template
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+manage.utils module
+-------------------
+
+.. automodule:: manage.utils
     :members:
     :undoc-members:
     :show-inheritance:

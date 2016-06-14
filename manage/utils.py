@@ -7,9 +7,7 @@ WIN = sys.platform.startswith('win')
 
 
 if PY2:
-    # exec('def reraise(tp, value, tb=None):\n raise tp, value, tb')
-    def reraise(tp, value, tb=None):
-        raise tp, value, tb  # noqa
+    exec('def reraise(tp, value, tb=None):\n raise tp, value, tb')
 else:
     def reraise(tp, value, tb=None):
         if value.__traceback__ is not tb:
