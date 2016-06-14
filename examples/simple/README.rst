@@ -88,6 +88,6 @@ And the shell acording to defined attributes in **manage.yml**:
   ...
 
   Hello My Simple Project World
-	   Auto imported: ['import_string', 'path', 'function', 'sp']
+    Auto imported: ['import_string', 'path', 'function', 'sp']
 
-  In [1]: 
+  In [1]:
