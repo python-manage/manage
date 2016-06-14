@@ -13,7 +13,7 @@ Tests for `manage` module.
 # from contextlib import contextmanager
 from click.testing import CliRunner
 
-from manage import cli
+from manage.cli import cli
 
 
 class TestManage(object):
@@ -27,12 +27,12 @@ class TestManage(object):
 
     def test_command_line_interface(self):
         runner = CliRunner()
-        result = runner.invoke(cli.main)
+        result = runner.invoke(cli, ['--help'])
         assert result.exit_code == 0
         assert 'shell' in result.output
-        help_result = runner.invoke(cli.main, ['--help'])
+        help_result = runner.invoke(cli, ['--help'])
         assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output
+        assert 'Show this message and exit.' in help_result.output
 
     @classmethod
     def teardown_class(cls):
