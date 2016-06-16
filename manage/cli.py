@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import copy
 import code
 import json
 import yaml
@@ -10,6 +11,7 @@ import readline
 import rlcompleter
 from manage.template import default_manage_dict
 from manage.auto_import import import_objects, exec_init, exec_init_script
+from manage.commands_collector import load_commands
 
 MANAGE_FILE = 'manage.yml'
 HIDDEN_MANAGE_FILE = '.{0}'.format(MANAGE_FILE)
@@ -26,15 +28,14 @@ def load_manage_dict(filename=None):
         elif os.path.exists(HIDDEN_MANAGE_FILE):
             manage_filename = HIDDEN_MANAGE_FILE
         else:
-            default_manage_dict['shell']['banner']['message'] = (
+            MANAGE_DICT.update(copy.deepcopy(default_manage_dict))
+            MANAGE_DICT['shell']['banner']['message'] = (
                 "WARNING: This is not a managed project\n"
                 "\tPlease `exit()` and \n"
                 "\trun `$ manage init`\n"
                 "\tand edit `manage.yml` file with desired options"
             )
-            default_manage_dict['shell']['auto_import']['display'] = False
-            MANAGE_DICT.update(default_manage_dict)
-
+            MANAGE_DICT['shell']['auto_import']['display'] = False
         if manage_filename:
             with open(manage_filename) as manage_file:
                 MANAGE_DICT.update(yaml.load(manage_file))
@@ -155,12 +156,6 @@ def shell(config, ipython, ptpython):
         shell.interact(banner=banner_msg)
 
 
-@click.command()
-def foo():
-    """do nothing"""
-    print("foo")
-
-
 def load_manage_dict_from_sys_args():
     single_option = [item for item in sys.argv if '--filename=' in item]
     if single_option:
@@ -173,12 +168,12 @@ def load_manage_dict_from_sys_args():
 
 
 def main():
+    sys.path.insert(0, '.')
     load_manage_dict_from_sys_args()
     cli.help = MANAGE_DICT.get(
         'help_text', '{project_name} Interactive shell!'
     ).format(**MANAGE_DICT)
-    # TODO: Load commands
-    # cli.add_command(foo, name='bla')
+    load_commands(cli, MANAGE_DICT)
     return cli()
 
 

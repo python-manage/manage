@@ -72,10 +72,13 @@ e.g: A command to add users to your system::
   $ manage create_user --name=Bruno --passwd=1234
   Creating the user...
 
-**manage** has two ways for you to define custom commands
+**manage** has some different ways for you to define custom commands,
+you can use **click commands** defined in your project modules,
+you can also use **general functions** defined anywhere in your project,
+and if really needed can define new functions inside the **manage.yml** file
 
-1. Using a custom command module (single file)
-----------------------------------------------
+1. Using a custom click_commands module (single file)
+-----------------------------------------------------
 
 Lets say you have a commands module in your application, you write your custom command there and **manage** will load it
 
@@ -112,8 +115,8 @@ Now you run **manage --help**
     shell        Runs a Python shell with context
 
 
-Using a commands package (multiple files)
------------------------------------------
+Using a click_commands package (multiple files)
+-----------------------------------------------
 
 It is common to have different files to hold your commands so you may prefer having
 a **commands/** package and some **python** modules inside it to hold commands.
@@ -160,8 +163,8 @@ Now you run **manage --help**  and you have commands from both modules
     init         Initialize a manage shell in current...
     shell        Runs a Python shell with context
 
-Custom command names
---------------------
+Custom click_command names
+--------------------------
 
 Sometimes the name of commands differ from the name of the function so you can
 customize it.
@@ -170,11 +173,15 @@ customize it.
 
   commands:
     - module: commands.system
-      names:
-        clear_cache: reset_cache
+      config:
+        clear_cache:
+          name: reset_cache
+          help_text: This resets the cache
     - module: commands.user
-      names:
-        create_user: new_user
+      config:
+        create_user:
+          name: new_user
+          help_text: This creates new user
 
 Having different namespaces
 ---------------------------
@@ -184,9 +191,9 @@ you can user namespaced commands.
 
 .. code-block:: yaml
 
+  namespaced: true
   commands:
     - module: commands
-      namespaced: true
 
 Now you run **manage --help** and you can see all the commands in the same module will be namespaced by **modulename_**
 

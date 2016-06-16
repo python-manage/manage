@@ -1,7 +1,53 @@
 import sys
 import os
 import click
+import pkgutil
 import importlib
+
+from inspect import getmembers
+from click.core import BaseCommand
+from manage.utils import import_string
+
+
+def add_click_commands(module, cli, command_dict, namespaced):
+    """Loads all click commands"""
+    module_commands = [
+        item for item in getmembers(module)
+        if isinstance(item[1], BaseCommand)
+    ]
+    options = command_dict.get('config', {})
+    namespace = command_dict.get('namespace')
+    for name, function in module_commands:
+        f_options = options.get(name, {})
+        command_name = f_options.get('name', name)
+        if namespace:
+            command_name = '{}_{}'.format(namespace, command_name)
+        elif namespaced:
+            module_namespace = module.__name__.split('.')[-1]
+            command_name = '{}_{}'.format(module_namespace, command_name)
+        function.short_help = f_options.get('help_text', function.short_help)
+        cli.add_command(function, name=command_name)
+
+
+def load_commands(cli, manage_dict):
+    """Loads the commands defined in manage file"""
+    # get click commands
+    commands = manage_dict.get('click_commands', [])
+    namespaced = manage_dict.get('namespaced')
+    for command_dict in commands:
+        root_module = import_string(command_dict['module'])
+        if getattr(root_module, '__path__', None):
+            # This is a package
+            iter_modules = pkgutil.iter_modules(
+                root_module.__path__, prefix=root_module.__name__ + '.'
+            )
+            submodules_names = [item[1] for item in iter_modules]
+            submodules = [import_string(name) for name in submodules_names]
+            for module in submodules:
+                add_click_commands(module, cli, command_dict, namespaced)
+        else:
+            # a single file module
+            add_click_commands(root_module, cli, command_dict, namespaced)
 
 
 class CommandsCollector(click.MultiCommand):

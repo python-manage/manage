@@ -1,0 +1,19 @@
+namespaced: true
+click_commands:
+  - module: my_system.user
+  - module: my_system.group
+    config:
+      create_group:
+         name: new_group
+         help_text: New group will be created
+help_text: This is the {project_name} interactive shell
+project_name:  namespaced Commands
+shell:
+  auto_import:
+    display: true
+    objects: {}
+  banner:
+    enabled: true
+    message: Manage Interactive Shell! edit your `manage.yml`
+  init_script: print("Starting interactive shell!")
+  readline_enabled: true

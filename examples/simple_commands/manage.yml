@@ -1,0 +1,13 @@
+commands:
+  - module: my_system.commands
+help_text: This is the {project_name} interactive shell
+project_name: Simple With Commands
+shell:
+  auto_import:
+    display: true
+    objects: {}
+  banner:
+    enabled: true
+    message: Manage Interactive Shell! edit your `manage.yml`
+  init_script: print("Starting interactive shell!")
+  readline_enabled: true
