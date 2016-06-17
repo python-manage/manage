@@ -244,22 +244,18 @@ so you can put all your commands in yaml file directly.
 
 .. code-block:: yaml
 
-  inline_commands:
-    - name: create_user
-      help: Creates a new user, calling any callable in path
-      module: mysystem.users.create
-      options:
-        - name:
-            required: true
-        - passwd:
-            required: true
-        - group:
-            default: admin
-    - name: clear_cache
-      help: Executes inline code to clear the cache
-      code: |
-        from mysystem import cache
-        cache.clear()
+    inline_commands:
+      - name: clear_cache
+        help_text: Executes inline code to clear the cache
+        context:
+          - sys
+          - pprint
+        options:
+          --days:
+            default: 100
+        code: |
+          pprint.pprint({'clean_days': days, 'path': sys.path})
+
 
 Now running **manage --help**
 
@@ -268,12 +264,15 @@ Now running **manage --help**
   $ manage --help
   ...
   Commands:
-    create_user  Creates a new user, calling any callable in path
     clear_cache  Executes inline code to clear the cache
     debug        Shows the parsed manage file
     init         Initialize a manage shell in current...
     shell        Runs a Python shell with context
 
+
+And you can run using::
+
+  $ manage clear_cache --days 15
 
 Further Explanations
 ====================

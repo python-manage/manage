@@ -29,11 +29,28 @@ def add_click_commands(module, cli, command_dict, namespaced):
         cli.add_command(function, name=command_name)
 
 
+def make_command_from_string(code, cmd_context, options, help_text=None):
+    def _command(**kwargs):
+        exec (code, cmd_context, kwargs)
+
+    if help_text:
+        _command.__doc__ = help_text
+    _command = click.command()(_command)
+    for name, option in options.items():
+        _command = click.option(name, **option)(_command)
+    return _command
+
+
+def get_context(context):
+    return {item: import_string(item) for item in context}
+
+
 def load_commands(cli, manage_dict):
     """Loads the commands defined in manage file"""
+    namespaced = manage_dict.get('namespaced')
+
     # get click commands
     commands = manage_dict.get('click_commands', [])
-    namespaced = manage_dict.get('namespaced')
     for command_dict in commands:
         root_module = import_string(command_dict['module'])
         if getattr(root_module, '__path__', None):
@@ -48,6 +65,24 @@ def load_commands(cli, manage_dict):
         else:
             # a single file module
             add_click_commands(root_module, cli, command_dict, namespaced)
+
+    # get inline commands
+    commands = manage_dict.get('inline_commands', [])
+    for command_dict in commands:
+        name = command_dict['name']
+        help_text = command_dict.get('help_text')
+        options = command_dict.get('options', {})
+        context = command_dict.get('context', [])
+        code = command_dict['code']
+        cli.add_command(
+            make_command_from_string(
+                code=code,
+                cmd_context=get_context(context),
+                options=options,
+                help_text=help_text
+            ),
+            name=name
+        )
 
 
 class CommandsCollector(click.MultiCommand):

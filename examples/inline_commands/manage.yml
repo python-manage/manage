@@ -1,0 +1,23 @@
+help_text: This is the {project_name} interactive shell
+inline_commands:
+  - name: clear_cache
+    help_text: Executes inline code to clear the cache
+    context:
+      - sys
+      - pprint
+    options:
+      --days:
+        default: 100
+    code: |
+      pprint.pprint({'clean_days': days, 'path': sys.path})
+
+project_name: Inline Commands Project
+shell:
+  auto_import:
+    display: true
+    objects: {}
+  banner:
+    enabled: true
+    message: Manage Interactive Shell! edit your `manage.yml`
+  init_script: print("Starting interactive shell!")
+  readline_enabled: true
