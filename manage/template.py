@@ -14,7 +14,7 @@ default_manage_dict = {
         'readline_enabled': True,
         'init_script': 'print("Starting interactive shell!")'
     },
-    'commands': [],
+    'function_commands': [],
     'click_commands': [],
     'inline_commands': [],
 }

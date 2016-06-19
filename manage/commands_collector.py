@@ -41,6 +41,17 @@ def make_command_from_string(code, cmd_context, options, help_text=None):
     return _command
 
 
+def make_command_from_function(function, options, help_text=None):
+
+    if help_text:
+        function.__doc__ = help_text
+
+    function = click.command()(function)
+    for name, option in options.items():
+        function = click.option(name, **option)(function)
+    return function
+
+
 def get_context(context):
     return {item: import_string(item) for item in context}
 
@@ -78,6 +89,22 @@ def load_commands(cli, manage_dict):
             make_command_from_string(
                 code=code,
                 cmd_context=get_context(context),
+                options=options,
+                help_text=help_text
+            ),
+            name=name
+        )
+
+    # get function commands
+    commands = manage_dict.get('function_commands', [])
+    for command_dict in commands:
+        name = command_dict['name']
+        help_text = command_dict.get('help_text')
+        options = command_dict.get('options', {})
+        function = import_string(command_dict['function'])
+        cli.add_command(
+            make_command_from_function(
+                function=function,
                 options=options,
                 help_text=help_text
             ),

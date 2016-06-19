@@ -60,7 +60,9 @@ If **IPython** is installed **manage shell** loads it
 
 Else will use the **default Python console** including support for autocomplete.
 
-Check the example in: https://github.com/rochacbruno/manage/tree/master/examples/simple
+Check the examples in:
+
+https://github.com/rochacbruno/manage/tree/master/examples/
 
 
 Custom Commands
@@ -270,7 +272,9 @@ Now running **manage --help**
     shell        Runs a Python shell with context
 
 
-And you can run using::
+And you can run using
+
+.. code-block:: console
 
   $ manage clear_cache --days 15
 

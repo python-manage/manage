@@ -1,7 +1,14 @@
-click_commands:
-  - module: my_system.commands
+function_commands:
+  - function: my_system.functions.create_user
+    name: new_user
+    help_text: Create new user
+    options:
+      --name:
+        required: true
+      --password:
+        required: true
 help_text: This is the {project_name} interactive shell
-project_name: Simple With Commands
+project_name: Multiple With Commands
 shell:
   auto_import:
     display: true
