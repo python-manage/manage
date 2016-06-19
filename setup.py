@@ -22,7 +22,7 @@ test_requirements = [
 
 setup(
     name='manage',
-    version='0.1.2',
+    version='0.1.3',
     description=(
         "Command Line Manager + Interactive Shell for Python Projects"
     ),
