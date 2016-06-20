@@ -2,4 +2,4 @@
 
 
 def create_user(name, password):
-    print("Crating user %s" % name)
+    print("Creating user %s" % name)

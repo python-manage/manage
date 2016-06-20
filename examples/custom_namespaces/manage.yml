@@ -8,7 +8,7 @@ click_commands:
          name: new_group
          help_text: New group will be created
 help_text: This is the {project_name} interactive shell
-project_name:  Custom Named Commands
+project_name:  Custom Namespaces
 shell:
   auto_import:
     display: true

@@ -8,7 +8,7 @@ function_commands:
       --password:
         required: true
 help_text: This is the {project_name} interactive shell
-project_name: Multiple With Commands
+project_name: Functions as Commands
 shell:
   auto_import:
     display: true

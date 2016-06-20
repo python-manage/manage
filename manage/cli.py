@@ -167,13 +167,20 @@ def load_manage_dict_from_sys_args():
     load_manage_dict(filename)
 
 
-def main():
+def init_cli(cli_obj, reset=False):
+    if reset:
+        global MANAGE_DICT
+        MANAGE_DICT = {}
     sys.path.insert(0, '.')
     load_manage_dict_from_sys_args()
     cli.help = MANAGE_DICT.get(
         'help_text', '{project_name} Interactive shell!'
     ).format(**MANAGE_DICT)
     load_commands(cli, MANAGE_DICT)
+
+
+def main():
+    init_cli(cli)
     return cli()
 
 

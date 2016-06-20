@@ -51,7 +51,7 @@ lint: ## check style with flake8
 	flake8 manage tests
 
 test: ## run tests quickly with the default Python
-	py.test
+	py.test -v --boxed
 
 
 test-all: ## run tests on every Python version with tox
