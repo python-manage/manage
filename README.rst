@@ -76,8 +76,8 @@ e.g: A command to add users to your system::
 
 **manage** has some different ways for you to define custom commands,
 you can use **click commands** defined in your project modules,
-you can also use **general functions** defined anywhere in your project,
-and if really needed can define new functions inside the **manage.yml** file
+you can also use **function_commands** defined anywhere in your project,
+and if really needed can define **inline_commands** inside the **manage.yml** file
 
 1. Using a custom click_commands module (single file)
 -----------------------------------------------------
@@ -101,7 +101,7 @@ Now you go to your **manage.yml** or **.manage.yml** and specify your custom com
 
 .. code-block:: yaml
 
-  commands:
+  click_commands:
     - module: commands
 
 Now you run **manage --help**
@@ -149,7 +149,7 @@ So now you want to add all those commands to your **manage** editing your manage
 
 .. code-block:: yaml
 
-  commands:
+  click_commands:
     - module: commands
 
 Now you run **manage --help**  and you have commands from both modules
@@ -173,7 +173,7 @@ customize it.
 
 .. code-block:: yaml
 
-  commands:
+  click_commands:
     - module: commands.system
       config:
         clear_cache:
@@ -194,7 +194,7 @@ you can user namespaced commands.
 .. code-block:: yaml
 
   namespaced: true
-  commands:
+  click_commands:
     - module: commands
 
 Now you run **manage --help** and you can see all the commands in the same module will be namespaced by **modulename_**
@@ -218,7 +218,7 @@ And you can even customize namespace for each module separately
 
 .. code-block:: yaml
 
-  commands:
+  click_commands:
     - module: commands.system
       namespace: sys
     - module: commands.user
@@ -277,6 +277,47 @@ And you can run using
 .. code-block:: console
 
   $ manage clear_cache --days 15
+
+3. Using general functions as commands
+--------------------------------------
+And if you already has some defined function (any callable works).
+
+.. code-block:: python
+
+    # my_system.functions.py
+    def create_user(name, password):
+        print("Creating user %s" % name)
+
+
+
+.. code-block:: yaml
+
+    function_commands:
+      - function: my_system.functions.create_user
+        name: new_user
+        help_text: Create new user
+        options:
+          --name:
+            required: true
+          --password:
+            required: true
+
+
+Now running **manage --help**
+
+.. code-block:: console
+
+  $ manage --help
+  ...
+  Commands:
+    new_user     Create new user
+    debug        Shows the parsed manage file
+    init         Initialize a manage shell in current...
+    shell        Runs a Python shell with context
+
+  $ manage new_user --name=Bruno --password=1234
+  Creating user Bruno
+
 
 Further Explanations
 ====================
