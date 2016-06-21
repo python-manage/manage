@@ -60,7 +60,53 @@ If **IPython** is installed **manage shell** loads it
 
 Else will use the **default Python console** including support for autocomplete.
 
-Check the examples in:
+The first thing you can do with **manage** is customizing the objects that will be automatically loaded in to shell,
+saving you from importing and initializing a lot of stuff every time you need to play with your app via console.
+
+Edit **manage.yml** with:
+
+.. code-block:: yaml
+
+    project_name: My Awesome Project
+    help_text: |
+      This is the {project_name} interactive shell!
+    shell:
+      readline_enabled: true
+      banner:
+        enabled: true
+        message: 'Welcome to {project_name} shell!'
+      auto_import:
+        display: true
+        objects:
+          my_system.config.settings:
+          my_system.my_module.MyClass:
+          my_system.my_module.OtherClass:
+            as: NiceClass
+          sys.path:
+            as: sp
+            init:
+              insert:
+                args:
+                  - 0
+                  - /path/to/be/added/automatically/to/sys/path
+      init_script: |
+        from my_system.config import settings
+        print("Initializing settings...")
+        settings.configure()
+
+
+Then the above **manage.yaml** will give you a shell like this:
+
+.. code-block:: console
+
+    $ manage shell
+    Initializing settings...
+    Welcome to My Awesome Project shell!
+        Auto imported: ['sp', 'settings', 'MyClass', 'NiceCLass']
+    >>>  NiceClass. <tab> # autocomplete enabled
+
+
+Check more examples in:
 
 https://github.com/rochacbruno/manage/tree/master/examples/
 
