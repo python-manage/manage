@@ -13,11 +13,12 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    # TODO: put package requirements here
+    'PyYAML==3.11'
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    'pytest==2.9.2',
+    'pytest-xdist==1.14'
 ]
 
 setup(
