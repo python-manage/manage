@@ -42,6 +42,12 @@ All you have to do is **init** your project directory (creating the manage.yml f
 The file **manage.yml** describes how **manage** command should discover your app modules and custom commands and also it
 defines which objects should be loaded in to the **shell**
 
+.. note::
+
+   Windows users may need to install proper version of PyYAML depending on the version of that thing you call an operating system,
+   installable available in: https://pypi.python.org/pypi/PyYAML
+   **or consider using Linux and don't worry about this as everything works well in Linux except games, photoshop and solitary game :)**
+
 The Shell
 =========
 
