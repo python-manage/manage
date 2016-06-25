@@ -11,7 +11,7 @@ import readline
 import rlcompleter
 from manage.template import default_manage_dict
 from manage.auto_import import import_objects, exec_init, exec_init_script
-from manage.commands_collector import load_commands
+from manage.commands_collector import load_commands, load_command_sources
 
 MANAGE_FILE = 'manage.yml'
 HIDDEN_MANAGE_FILE = '.{0}'.format(MANAGE_FILE)
@@ -55,30 +55,22 @@ class Config(object):
         return self._manage_dict
 
 
-pass_config = click.make_pass_decorator(Config, ensure=True)
-
-
 @click.group(no_args_is_help=False)
-@click.option('--filename', type=click.Path())
-@pass_config
-def cli(config, filename):
+def cli():
     """ Core commands wrapper """
-    config.filename = filename
 
 
 @cli.command()
 @click.option('--banner')
 @click.option('--hidden/--no-hidden', default=False)
 @click.option('--backup/--no-backup', default=True)
-@pass_config
-def init(config, banner, hidden, backup):
+def init(banner, hidden, backup):
     """Initialize a manage shell in current directory
         $ manage init --banner="My awesome app shell"
         initializing manage...
         creating manage.yml
     """
-    manage_file = config.filename or (
-        HIDDEN_MANAGE_FILE if hidden else MANAGE_FILE)
+    manage_file = HIDDEN_MANAGE_FILE if hidden else MANAGE_FILE
     if os.path.exists(manage_file):
         if not click.confirm('Rewrite {0}?'.format(manage_file)):
             return
@@ -96,22 +88,19 @@ def init(config, banner, hidden, backup):
 
 
 @cli.command()
-@pass_config
-def debug(config):
+def debug():
     """Shows the parsed manage file"""
-    print(json.dumps(config.manage_dict, indent=2))
+    print(json.dumps(MANAGE_DICT, indent=2))
 
 
-@cli.command()
-@click.option('--ipython/--no-ipython', default=True)
-@click.option('--ptpython', default=False, is_flag=True)
-@pass_config
-def shell(config, ipython, ptpython):
-    """Runs a Python shell with context"""
-    manage_dict = config.manage_dict
+def create_shell(ipython, ptpython, manage_dict=None, extra_vars=None):
+    """Creates the shell"""
+    manage_dict = manage_dict or MANAGE_DICT
     _vars = globals()
     _vars.update(locals())
     auto_imported = import_objects(manage_dict)
+    if extra_vars:
+        auto_imported.update(extra_vars)
     _vars.update(auto_imported)
     msgs = []
     if manage_dict['shell']['banner']['enabled']:
@@ -156,12 +145,23 @@ def shell(config, ipython, ptpython):
         shell.interact(banner=banner_msg)
 
 
+@cli.command()
+@click.option('--ipython/--no-ipython', default=True)
+@click.option('--ptpython', default=False, is_flag=True)
+def shell(ipython, ptpython):
+    """Runs a Python shell with context"""
+    return create_shell(ipython, ptpython, MANAGE_DICT)
+
+
 def load_manage_dict_from_sys_args():
-    single_option = [item for item in sys.argv if '--filename=' in item]
+    single_option = [item for item in sys.argv if '--managefile=' in item]
     if single_option:
         filename = single_option[0].split('=')[-1]
-    elif '--filename' in sys.argv:
-        filename = sys.argv[sys.argv.index('--filename') + 1]
+        sys.argv.remove(single_option[0])
+    elif '--managefile' in sys.argv:
+        filename = sys.argv[sys.argv.index('--managefile') + 1]
+        sys.argv.remove('--managefile')
+        sys.argv.remove(filename)
     else:
         filename = None
     load_manage_dict(filename)
@@ -177,11 +177,17 @@ def init_cli(cli_obj, reset=False):
         'help_text', '{project_name} Interactive shell!'
     ).format(**MANAGE_DICT)
     load_commands(cli, MANAGE_DICT)
+    manager = click.CommandCollection(help=cli.help, no_args_is_help=False)
+    manager.add_source(cli)
+    load_command_sources(manager, MANAGE_DICT)
+    for item in MANAGE_DICT.get('disabled', []):
+        cli.commands.pop(item, None)
+    return manager
 
 
 def main():
-    init_cli(cli)
-    return cli()
+    manager = init_cli(cli)
+    return manager()
 
 
 if __name__ == '__main__':

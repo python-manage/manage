@@ -60,4 +60,4 @@ target/
 
 /manage.yml
 /.manage.yml
-/.bck_manage.yml
+/.bck*manage.yml
