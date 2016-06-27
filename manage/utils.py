@@ -1,13 +1,14 @@
 # coding: utf-8
 import sys
 import importlib
+from six import exec_
 
 PY2 = sys.version_info[0] == 2
 WIN = sys.platform.startswith('win')
 
 
 if PY2:
-    exec('def reraise(tp, value, tb=None):\n raise tp, value, tb')
+    exec_('def reraise(tp, value, tb=None):\n raise tp, value, tb')
 else:
     def reraise(tp, value, tb=None):
         if value.__traceback__ is not tb:

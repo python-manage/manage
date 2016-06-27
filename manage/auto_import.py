@@ -1,4 +1,5 @@
 # coding: utf-8
+from six import exec_
 from manage.utils import import_string
 
 
@@ -25,7 +26,7 @@ def import_objects(manage_dict):
         else:
             auto_import[get_name(_obj, name)] = _obj
     for script in auto_scripts:
-        exec(script, auto_import)
+        exec_(script, auto_import)
     return auto_import
 
 
@@ -39,4 +40,4 @@ def exec_init(manage_dict, context):
 
 def exec_init_script(manage_dict, context):
     if 'init_script' in manage_dict['shell']:
-        exec(manage_dict['shell']['init_script'], context)
+        exec_(manage_dict['shell']['init_script'], context)

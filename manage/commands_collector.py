@@ -1,6 +1,6 @@
 import click
 import pkgutil
-
+from six import exec_
 from inspect import getmembers
 from click.core import BaseCommand
 from manage.utils import import_string
@@ -28,7 +28,7 @@ def add_click_commands(module, cli, command_dict, namespaced):
 
 def make_command_from_string(code, cmd_context, options, help_text=None):
     def _command(**kwargs):
-        exec(code, cmd_context, kwargs)
+        exec_(code, cmd_context, kwargs)
 
     if help_text:
         _command.__doc__ = help_text
