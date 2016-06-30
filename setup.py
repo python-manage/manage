@@ -14,7 +14,8 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'Click>=6.0',
     'PyYAML==3.11',
-    'six'
+    'six',
+    'import_string'
 ]
 
 test_requirements = [

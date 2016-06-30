@@ -1,6 +1,6 @@
 # coding: utf-8
+import import_string
 from six import exec_
-from manage.utils import import_string
 
 
 def get_name(obj, default):

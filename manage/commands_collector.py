@@ -1,9 +1,9 @@
 import click
 import pkgutil
+import import_string
 from six import exec_
 from inspect import getmembers
 from click.core import BaseCommand
-from manage.utils import import_string
 
 
 def add_click_commands(module, cli, command_dict, namespaced):
