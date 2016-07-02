@@ -9,6 +9,7 @@ import yaml
 import click
 import readline
 import rlcompleter
+from manage import __version__
 from manage.template import default_manage_dict
 from manage.auto_import import import_objects, exec_init, exec_init_script
 from manage.commands_collector import load_commands, load_command_sources
@@ -88,8 +89,12 @@ def init(banner, hidden, backup):
 
 
 @cli.command()
-def debug():
-    """Shows the parsed manage file"""
+@click.option('--version', '-V', is_flag=True, default=False)
+def debug(version=False):
+    """Shows the parsed manage file -V shows version"""
+    if version:
+        print(__version__)
+        return
     print(json.dumps(MANAGE_DICT, indent=2))
 
 
