@@ -20,7 +20,8 @@ def import_objects(manage_dict):
                 if 'init' in spec:
                     method_name = spec['init'].keys()[0]
                     args = spec['init'].get(method_name, {}).get('args', [])
-                    kwargs = spec['init'].get(method_name, {}).get('kwargs', {})
+                    kwargs = spec['init'].get(
+                        method_name, {}).get('kwargs', {})
                     getattr(_obj, method_name)(*args, **kwargs)
                 auto_import[spec.get('as', get_name(_obj, name))] = _obj
                 if 'init_script' in spec:
@@ -29,7 +30,7 @@ def import_objects(manage_dict):
                 auto_import[get_name(_obj, name)] = _obj
     else:
         for name in object_list:
-            _obj =  import_string(name)
+            _obj = import_string(name)
             auto_import[getattr(_obj, '__name__', name)] = _obj
     for script in auto_scripts:
         exec_(script, auto_import)

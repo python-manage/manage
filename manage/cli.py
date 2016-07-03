@@ -12,7 +12,9 @@ import rlcompleter
 from manage import __version__
 from manage.template import default_manage_dict
 from manage.auto_import import import_objects, exec_init, exec_init_script
-from manage.commands_collector import load_commands, load_command_sources
+from manage.commands_collector import (
+    load_commands, load_command_sources, load_groups
+)
 
 MANAGE_FILE = 'manage.yml'
 HIDDEN_MANAGE_FILE = '.{0}'.format(MANAGE_FILE)
@@ -181,6 +183,7 @@ def init_cli(cli_obj, reset=False):
     cli.help = MANAGE_DICT.get(
         'help_text', '{project_name} Interactive shell!'
     ).format(**MANAGE_DICT)
+    load_groups(cli, MANAGE_DICT)
     load_commands(cli, MANAGE_DICT)
     manager = click.CommandCollection(help=cli.help, no_args_is_help=False)
     manager.add_source(cli)

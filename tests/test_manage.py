@@ -138,6 +138,62 @@ class TestManage(object):
             cli, ['create_group', '--name=Users'])
         assert 'Creating the group Users' in create_group.output
 
+    def test_naval(self):
+        runner = CliRunner()
+        self.go_to_example('naval')
+
+        # ship and mine is there?
+        result = runner.invoke(cli, ['--help'])
+        assert result.exit_code == 0
+        assert 'ship' in result.output
+        assert 'mine' in result.output
+
+        # help for ship
+        result = runner.invoke(cli, ['ship', '--help'])
+        assert result.exit_code == 0
+        assert 'new' in result.output
+        assert 'move' in result.output
+        assert 'shoot' in result.output
+
+        # help for mine
+        result = runner.invoke(cli, ['mine', '--help'])
+        assert result.exit_code == 0
+        assert 'set' in result.output
+        assert 'remove' in result.output
+
+        # ship new
+        result = runner.invoke(cli, ['ship', 'new', 'FireStorm'])
+        assert result.exit_code == 0
+        assert result.output == 'Created ship FireStorm\n'
+
+        # ship move
+        result = runner.invoke(
+            cli, ['ship', 'move', 'FireStorm', '12', '34', '--speed', '90']
+        )
+        assert result.exit_code == 0
+        assert result.output == (
+            'Moving ship FireStorm to 12.0,34.0 with speed 90\n'
+        )
+
+        # ship shoot
+        result = runner.invoke(cli, ['ship', 'shoot', 'FireStorm', '30', '45'])
+        assert result.exit_code == 0
+        assert result.output == 'Ship FireStorm fires to 30.0,45.0\n'
+
+        # mine set
+        result = runner.invoke(cli, ['mine', 'set', '10', '20'])
+        assert result.exit_code == 0
+        assert result.output == 'Set moored mine at 10.0,20.0\n'
+
+        result = runner.invoke(cli, ['mine', 'set', '10', '20', '--drifting'])
+        assert result.exit_code == 0
+        assert result.output == 'Set drifting mine at 10.0,20.0\n'
+
+        # mine remove
+        result = runner.invoke(cli, ['mine', 'remove', '10', '20'])
+        assert result.exit_code == 0
+        assert result.output == 'Removed mine at 10.0,20.0\n'
+
     @classmethod
     def teardown_class(cls):
         pass
