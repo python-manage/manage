@@ -100,7 +100,7 @@ def debug(version=False):
     print(json.dumps(MANAGE_DICT, indent=2))
 
 
-def create_shell(ipython, ptpython, manage_dict=None, extra_vars=None):
+def create_shell(console, manage_dict=None, extra_vars=None):
     """Creates the shell"""
     manage_dict = manage_dict or MANAGE_DICT
     _vars = globals()
@@ -130,7 +130,7 @@ def create_shell(ipython, ptpython, manage_dict=None, extra_vars=None):
     exec_init(manage_dict, _vars)
     exec_init_script(manage_dict, _vars)
 
-    if ptpython:
+    if console == 'ptpython':
         try:
             from ptpython.repl import embed
             embed({}, _vars)
@@ -138,8 +138,16 @@ def create_shell(ipython, ptpython, manage_dict=None, extra_vars=None):
             click.echo("ptpython is not installed!")
         return
 
+    if console == 'bpython':
+        try:
+            from bpython import embed
+            embed(locals_=_vars, banner=banner_msg)
+        except ImportError:
+            click.echo("bpython is not installed!")
+        return
+
     try:
-        if ipython is True:
+        if console == 'ipython':
             from IPython import start_ipython
             from traitlets.config import Config
             c = Config()
@@ -153,11 +161,17 @@ def create_shell(ipython, ptpython, manage_dict=None, extra_vars=None):
 
 
 @cli.command()
-@click.option('--ipython/--no-ipython', default=True)
-@click.option('--ptpython', default=False, is_flag=True)
-def shell(ipython, ptpython):
+@click.option('console', '--ipython', default=True, flag_value='ipython',
+              help='Start with ipython console')
+@click.option('console', '--ptpython', flag_value='ptpython',
+              help='Start with ptpython console')
+@click.option('console', '--bpython', flag_value='bpython',
+              help='Start with bpython console')
+@click.option('console', '--python', flag_value='python',
+              help='Start with python console')
+def shell(console):
     """Runs a Python shell with context"""
-    return create_shell(ipython, ptpython, MANAGE_DICT)
+    return create_shell(MANAGE_DICT.get('console', console), MANAGE_DICT)
 
 
 def load_manage_dict_from_sys_args():
