@@ -171,7 +171,10 @@ def create_shell(console, manage_dict=None, extra_vars=None):
               help='Start with python console')
 def shell(console):
     """Runs a Python shell with context"""
-    return create_shell(MANAGE_DICT.get('console', console), MANAGE_DICT)
+    return create_shell(
+        MANAGE_DICT.get('shell', {}).get('console', console),
+        MANAGE_DICT
+    )
 
 
 def load_manage_dict_from_sys_args():

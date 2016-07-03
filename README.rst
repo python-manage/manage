@@ -60,11 +60,14 @@ already have your project's common objects available.
 
 Also you can specify a custom function to run or a string based code block to run, useful to init and configure the objects.
 
-If **ptpython** is installed **manage shell** will load it
+Consoles
 
-If **IPython** is installed **manage shell** loads it
+:code:`manage shell` can start different consoles by passing the options
 
-Else will use the **default Python console** including support for autocomplete.
+- :code:`manage shell --ipython`  - This is the default (if ipython installed)
+- :code:`manage shell --ptpython`
+- :code:`manage shell --bpython`
+- :code:`manage shell --python` - This is the **default Python console** including support for autocomplete. (will be default when no other is installed)
 
 The first thing you can do with **manage** is customizing the objects that will be automatically loaded in to shell,
 saving you from importing and initializing a lot of stuff every time you need to play with your app via console.
@@ -77,6 +80,7 @@ Edit **manage.yml** with:
     help_text: |
       This is the {project_name} interactive shell!
     shell:
+      console: bpython
       readline_enabled: true
       banner:
         enabled: true
@@ -115,6 +119,10 @@ Then the above **manage.yaml** will give you a shell like this:
 Check more examples in:
 
 https://github.com/rochacbruno/manage/tree/master/examples/
+
+The famous **naval fate** example (used in docopt and click) is in:
+
+https://github.com/rochacbruno/manage/tree/master/examples/naval/
 
 
 Custom Commands

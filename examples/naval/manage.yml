@@ -61,9 +61,10 @@ shell:
     display: true
     objects:
       - click
+      - os
 
   banner:
     enabled: true
-    message: Welcome to {project_name} interactive shell
+    message: Welcome to {project_name} interactive shell - Hello!
 
   readline_enabled: true
