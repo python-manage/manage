@@ -41,8 +41,8 @@ def handle_options_and_args(_command, arguments, options):
     for argument in arguments:
         if isinstance(argument, dict):
             _command = click.argument(
-                argument.keys()[0],
-                **handle_option_and_arg_data(argument.values()[0])
+                list(argument.keys())[0],
+                **handle_option_and_arg_data(list(argument.values())[0])
             )(_command)
         else:
             _command = click.argument(argument)(_command)
