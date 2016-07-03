@@ -116,6 +116,13 @@ Then the above **manage.yaml** will give you a shell like this:
     >>>  NiceClass. <tab> # autocomplete enabled
 
 
+Watch the demo:  
+
+|asciicast|
+
+.. |asciicast| image:: https://asciinema.org/a/51042.png
+   :target: https://asciinema.org/a/51042
+
 Check more examples in:
 
 https://github.com/rochacbruno/manage/tree/master/examples/
