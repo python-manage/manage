@@ -4,6 +4,7 @@ help_text: |
     This is the docopt and click example adapted to manage.
 
 groups:
+   # commands are separated in two groups, mine and ship.
    - ship:
        short_help: Manages Ships
        help_text: |
@@ -12,12 +13,14 @@ groups:
        help_text: Manages Mines
 
 click_commands:
+  # here we get the commands (pre defined) from modules
   - module: naval_mine_commands
     group: mine
   - module: naval_ship_commands
     group: ship
 
 function_commands:
+  # here we turn any function in project in to a command
   - function: naval_functions.mine_remove
     name: remove
     group: mine
@@ -28,6 +31,7 @@ function_commands:
           type: float
 
 inline_commands:
+  # here we create new functions directly in manage.yml
   - name: new
     group: ship
     help_text: Creates a new ship
