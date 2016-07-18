@@ -13,14 +13,14 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    'PyYAML==3.11',
+    'PyYAML>=3.11',
     'six',
     'import_string'
 ]
 
 test_requirements = [
-    'pytest==2.9.2',
-    'pytest-xdist==1.14'
+    'pytest>=2.9.2',
+    'pytest-xdist>=1.14'
 ]
 
 setup(
