@@ -15,9 +15,9 @@ Command Line Manager + Interactive Shell for Python Projects
         :target: https://manage.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://requires.io/github/rochacbruno/manage/requirements.svg?branch=master
-        :target: https://requires.io/github/rochacbruno/manage/requirements?branch=master
-        :alt: Dependencies
+.. image:: https://pyup.io/repos/github/rochacbruno/manage/shield.svg
+     :target: https://pyup.io/repos/github/rochacbruno/manage/
+     :alt: Updates
 
 
 * Free software: ISC license
