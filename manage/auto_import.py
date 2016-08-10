@@ -18,12 +18,18 @@ def import_objects(manage_dict):
             _obj = import_string(name)
             if spec:
                 if 'init' in spec:
-                    method_name = spec['init'].keys()[0]
-                    args = spec['init'].get(method_name, {}).get('args', [])
-                    kwargs = spec['init'].get(
-                        method_name, {}).get('kwargs', {})
+                    init = spec['init']
+                    if isinstance(init, dict):
+                        method_name = init.keys()[0]
+                        args = (init[method_name] or {}).get('args', [])
+                        kwargs = (init[method_name] or {}).get('kwargs', {})
+                    else:
+                        method_name = init
+                        args = []
+                        kwargs = {}
                     getattr(_obj, method_name)(*args, **kwargs)
                 auto_import[spec.get('as', get_name(_obj, name))] = _obj
+
                 if 'init_script' in spec:
                     auto_scripts.append(spec['init_script'])
             else:
