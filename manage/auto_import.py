@@ -1,4 +1,6 @@
 # coding: utf-8
+import sys
+import pkgutil
 import import_string
 from six import exec_
 
@@ -6,6 +8,17 @@ from six import exec_
 def get_name(obj, default):
     default = default.split('.')[0]
     return getattr(obj, '__name__', default)
+
+
+def import_submodules(name, submodules=None):
+    """Import all submodules for a package/module name"""
+    sys.path.insert(0, name)
+    if submodules:
+        for submodule in submodules:
+            import_string('{0}.{1}'.format(name, submodule))
+    else:
+        for item in pkgutil.walk_packages([name]):
+            import_string('{0}.{1}'.format(name, item[1]))
 
 
 def import_objects(manage_dict):
@@ -28,10 +41,20 @@ def import_objects(manage_dict):
                         args = []
                         kwargs = {}
                     getattr(_obj, method_name)(*args, **kwargs)
-                auto_import[spec.get('as', get_name(_obj, name))] = _obj
+                spec_as = spec.get('as', get_name(_obj, name))
+                if not isinstance(spec_as, list):
+                    spec_as = [spec_as]
+                for as_name in spec_as:
+                    auto_import[as_name] = _obj
 
                 if 'init_script' in spec:
                     auto_scripts.append(spec['init_script'])
+                if 'submodules' in spec:
+                    submodules = spec['submodules']
+                    if isinstance(submodules, list):
+                        import_submodules(name, submodules)
+                    else:
+                        import_submodules(name)
             else:
                 auto_import[get_name(_obj, name)] = _obj
     else:
