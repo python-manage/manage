@@ -81,7 +81,7 @@ Edit **manage.yml** with:
       This is the {project_name} interactive shell!
     shell:
       console: bpython
-      readline_enabled: true
+      readline_enabled: false  # MacOS has no readline completion support
       banner:
         enabled: true
         message: 'Welcome to {project_name} shell!'
@@ -116,7 +116,7 @@ Then the above **manage.yaml** will give you a shell like this:
     >>>  NiceClass. <tab> # autocomplete enabled
 
 
-Watch the demo:  
+Watch the demo:
 
 |asciicast|
 

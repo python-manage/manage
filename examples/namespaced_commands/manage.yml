@@ -16,4 +16,4 @@ shell:
     enabled: true
     message: Manage Interactive Shell! edit your `manage.yml`
   init_script: print("Starting interactive shell!")
-  readline_enabled: true
+  readline_enabled: false

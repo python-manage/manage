@@ -3,7 +3,7 @@ help_text: |
   This is the {project_name} interactive shell
   You can have commands or open the shell
 shell:
-  readline_enabled: true
+  readline_enabled: false
   banner:
     enabled: true
     message: 'Hello {project_name} World'

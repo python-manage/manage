@@ -7,8 +7,6 @@ import code
 import json
 import yaml
 import click
-import readline
-import rlcompleter
 from manage import __version__
 from manage.template import default_manage_dict
 from manage.auto_import import import_objects, exec_init, exec_init_script
@@ -123,10 +121,6 @@ def create_shell(console, manage_dict=None, extra_vars=None):
 
     banner_msg = u'\n'.join(msgs)
 
-    if manage_dict['shell']['readline_enabled']:
-        readline.set_completer(rlcompleter.Completer(_vars).complete)
-        readline.parse_and_bind('tab: complete')
-
     exec_init(manage_dict, _vars)
     exec_init_script(manage_dict, _vars)
 
@@ -156,6 +150,11 @@ def create_shell(console, manage_dict=None, extra_vars=None):
         else:
             raise ImportError
     except ImportError:
+        if manage_dict['shell']['readline_enabled']:
+            import readline
+            import rlcompleter
+            readline.set_completer(rlcompleter.Completer(_vars).complete)
+            readline.parse_and_bind('tab: complete')
         shell = code.InteractiveConsole(_vars)
         shell.interact(banner=banner_msg)
 

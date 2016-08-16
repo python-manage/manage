@@ -71,4 +71,4 @@ shell:
     enabled: true
     message: Welcome to {project_name} interactive shell - Hello!
 
-  readline_enabled: true
+  readline_enabled: false

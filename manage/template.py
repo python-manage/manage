@@ -11,7 +11,7 @@ default_manage_dict = {
             'display': True,  # Weather to print all a list of all objects
             'objects': {}
         },
-        'readline_enabled': True,
+        'readline_enabled': False,  # MacOS has no readline support
         'init_script': 'print("Starting interactive shell!")'
     },
     'function_commands': [],
