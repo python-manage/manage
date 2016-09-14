@@ -146,6 +146,9 @@ def create_shell(console, manage_dict=None, extra_vars=None):
             from traitlets.config import Config
             c = Config()
             c.TerminalInteractiveShell.banner2 = banner_msg
+            if manage_dict['shell'].get('auto_reload') is True:
+                c.InteractiveShellApp.extensions = ['autoreload']
+                c.InteractiveShellApp.exec_lines = ['%autoreload 2']
             start_ipython(argv=[], user_ns=_vars, config=c)
         else:
             raise ImportError
