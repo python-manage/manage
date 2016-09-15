@@ -7,6 +7,8 @@ import code
 import json
 import yaml
 import click
+import atexit
+import import_string
 from manage import __version__
 from manage.template import default_manage_dict
 from manage.auto_import import import_objects, exec_init, exec_init_script
@@ -98,7 +100,7 @@ def debug(version=False):
     print(json.dumps(MANAGE_DICT, indent=2))
 
 
-def create_shell(console, manage_dict=None, extra_vars=None):
+def create_shell(console, manage_dict=None, extra_vars=None, exit_hooks=None):
     """Creates the shell"""
     manage_dict = manage_dict or MANAGE_DICT
     _vars = globals()
@@ -124,6 +126,14 @@ def create_shell(console, manage_dict=None, extra_vars=None):
     exec_init(manage_dict, _vars)
     exec_init_script(manage_dict, _vars)
 
+    atexit_functions = [
+        import_string(func_name) for func_name in
+        manage_dict['shell'].get('exit_hooks', [])
+    ]
+    atexit_functions += exit_hooks or []
+    for atexit_function in atexit_functions:
+        atexit.register(atexit_function)
+
     if console == 'ptpython':
         try:
             from ptpython.repl import embed
@@ -146,9 +156,17 @@ def create_shell(console, manage_dict=None, extra_vars=None):
             from traitlets.config import Config
             c = Config()
             c.TerminalInteractiveShell.banner2 = banner_msg
-            if manage_dict['shell'].get('auto_reload') is True:
-                c.InteractiveShellApp.extensions = ['autoreload']
-                c.InteractiveShellApp.exec_lines = ['%autoreload 2']
+            c.InteractiveShellApp.extensions = [
+                extension for extension in
+                manage_dict['shell'].get('ipython_extensions', [])
+            ]
+            c.InteractiveShellApp.exec_lines = [
+                exec_line for exec_line in
+                manage_dict['shell'].get('ipython_exec_lines', [])
+            ]
+            if manage_dict['shell'].get('ipython_auto_reload') is True:
+                c.InteractiveShellApp.extensions.append('autoreload')
+                c.InteractiveShellApp.exec_lines.append('%autoreload 2')
             start_ipython(argv=[], user_ns=_vars, config=c)
         else:
             raise ImportError
