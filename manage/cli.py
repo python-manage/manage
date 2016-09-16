@@ -164,7 +164,7 @@ def create_shell(console, manage_dict=None, extra_vars=None, exit_hooks=None):
                 exec_line for exec_line in
                 manage_dict['shell'].get('ipython_exec_lines', [])
             ]
-            if manage_dict['shell'].get('ipython_auto_reload') is True:
+            if manage_dict['shell'].get('ipython_auto_reload', True) is True:
                 c.InteractiveShellApp.extensions.append('autoreload')
                 c.InteractiveShellApp.exec_lines.append('%autoreload 2')
             start_ipython(argv=[], user_ns=_vars, config=c)
