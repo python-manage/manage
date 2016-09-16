@@ -2,6 +2,7 @@ default_manage_dict = {
     'project_name': 'Project',
     'help_text': "This is the {project_name} interactive shell",
     'shell': {  # Preferences for 'manage shell'
+        'ipython_auto_reload': True,
         'banner': {  # Banner is the message printed on top of console
             'enabled': True,  # It can be disabled
             # Here it goes the message
