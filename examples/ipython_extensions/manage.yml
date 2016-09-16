@@ -1,0 +1,18 @@
+help_text: This is the {project_name} interactive shell
+project_name: Ipython Extensions Example
+shell:
+  exit_hooks:
+    - my_system.execute_on_exit
+  ipython_auto_reload: true
+  ipython_exec_lines:
+    - print('This line is executed once ipython starts')
+  ipython_extensions:
+    - my_system.extension
+  auto_import:
+    display: true
+    objects: {}
+  banner:
+    enabled: true
+    message: Manage Interactive Shell! edit your `manage.yml`
+  init_script: print("Starting interactive shell!")
+  readline_enabled: false
