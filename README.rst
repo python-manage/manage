@@ -132,6 +132,12 @@ The famous **naval fate** example (used in docopt and click) is in:
 https://github.com/rochacbruno/manage/tree/master/examples/naval/
 
 
+Projects using manage
+=====================
+
+- Quokka CMS (A Flask based CMS) is using manage
+- Red Hat Satellite QE tesitng framework (robottelo) is using manage
+
 Custom Commands
 ===============
 
@@ -402,3 +408,8 @@ Credits
 .. _click: http://click.pocoo.org
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
+Similar projects
+================
+
+- Cobra is a `manage` for Go language https://github.com/spf13/cobra
