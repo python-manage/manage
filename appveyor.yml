@@ -1,3 +1,9 @@
+environment:
+  matrix:
+    - BASEPYTHON: "C:\\Python35\\python.exe"
+    - BASEPYTHON: "C:\\Python34\\python.exe"
+    - BASEPYTHON: "C:\\Python27\\python.exe"
+
 install: pip install -U tox
 
 build: off
