@@ -2,4 +2,4 @@ install: pip install -U tox
 
 build: off
 
-test_script: tox -e py27
+test_script: tox -e windows
