@@ -1,0 +1,5 @@
+install: pip install -U tox
+
+build: off
+
+test_script: tox -e py27
