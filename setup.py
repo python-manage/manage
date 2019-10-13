@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'Click>=6.0',
+    'Click>=7.0',
     'PyYAML>=3.11',
     'six',
     'import_string'
