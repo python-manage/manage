@@ -70,9 +70,7 @@ class TestManage(object):
             'Error: Missing option "--password"'
             in runner.invoke(cli, ['new_user', '--name=Bruno']).output
         )
-        create_user = runner.invoke(
-            cli, ['new_user', '--name=Bruno', '--password=123']
-        )
+        create_user = runner.invoke(cli, ['new_user', '--name=Bruno', '--password=123'])
         assert 'Creating user Bruno' in create_user.output
 
     def test_inline_commands(self):
@@ -162,9 +160,7 @@ class TestManage(object):
             cli, ['ship', 'move', 'FireStorm', '12', '34', '--speed', '90']
         )
         assert result.exit_code == 0
-        assert result.output == (
-            'Moving ship FireStorm to 12.0,34.0 with speed 90\n'
-        )
+        assert result.output == ('Moving ship FireStorm to 12.0,34.0 with speed 90\n')
 
         # ship shoot
         result = runner.invoke(cli, ['ship', 'shoot', 'FireStorm', '30', '45'])
