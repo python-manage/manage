@@ -64,7 +64,7 @@ def cli():
 
 @cli.command()
 @click.option("--banner")
-@click.option("--project_name")
+@click.option("--project-name")
 @click.option("--hidden/--no-hidden", default=False)
 @click.option("--backup/--no-backup", default=True)
 def init(banner, project_name, hidden, backup):
