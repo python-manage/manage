@@ -10,10 +10,10 @@ default_manage_dict = {
         },
         'auto_import': {  # Objects to be auto imported to shell context
             'display': True,  # Weather to print all a list of all objects
-            'objects': {}
+            'objects': {},
         },
         'readline_enabled': False,  # MacOS has no readline support
-        'init_script': 'print("Starting interactive shell!")'
+        'init_script': 'print("Starting interactive shell!")',
     },
     'function_commands': [],
     'click_commands': [],
