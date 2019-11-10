@@ -64,11 +64,12 @@ def cli():
 
 @cli.command()
 @click.option("--banner")
+@click.option("--project_name")
 @click.option("--hidden/--no-hidden", default=False)
 @click.option("--backup/--no-backup", default=True)
-def init(banner, hidden, backup):
+def init(banner, project_name, hidden, backup):
     """Initialize a manage shell in current directory
-        $ manage init --banner="My awesome app shell"
+        $ manage init --banner="My awesome app shell" --project-name "P1"
         initializing manage...
         creating manage.yml
     """
@@ -86,6 +87,11 @@ def init(banner, hidden, backup):
         data = default_manage_dict
         if banner:
             data["shell"]["banner"]["message"] = banner
+        if project_name:
+            data["project_name"] = project_name
+            data["help_text"] = "This is the {} inteactive shell".format(
+                project_name
+            )
         output.write(yaml.dump(data, default_flow_style=False))
 
 
