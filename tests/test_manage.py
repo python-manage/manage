@@ -67,7 +67,7 @@ class TestManage(object):
         assert result.exit_code == 0
         assert 'new_user' in result.output
         assert (
-            'Error: Missing option "--password"'
+            "Error: Missing option '--password'"
             in runner.invoke(cli, ['new_user', '--name=Bruno']).output
         )
         create_user = runner.invoke(cli, ['new_user', '--name=Bruno', '--password=123'])

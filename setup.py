@@ -16,9 +16,10 @@ test_requirements = ['pytest>=2.9.2', 'pytest-xdist>=1.14']
 
 setup(
     name='manage',
-    version='0.1.13',
-    description=("Command Line Manager + Interactive Shell for Python Projects"),
+    version='0.1.14',
+    description="Command Line Manager + Interactive Shell for Python Projects",
     long_description=readme + '\n\n' + history,
+    long_description_content_type="text/x-rst",
     author="Bruno Rocha",
     author_email='rochacbruno@gmail.com',
     url='https://github.com/rochacbruno/manage',
@@ -38,6 +39,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8'
     ],
     test_suite='tests',
     tests_require=test_requirements,
