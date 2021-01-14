@@ -61,3 +61,6 @@ target/
 /manage.yml
 /.manage.yml
 /.bck*manage.yml
+
+# emacs
+*~

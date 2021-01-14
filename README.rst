@@ -6,18 +6,14 @@ Command Line Manager + Interactive Shell for Python Projects
 ------------------------------------------------------------
 
 .. image:: https://img.shields.io/pypi/v/manage.svg
-        :target: https://pypi.python.org/pypi/manage
+   :target: https://pypi.python.org/pypi/manage
 
-.. image:: https://img.shields.io/travis/rochacbruno/manage.svg
-        :target: https://travis-ci.org/rochacbruno/manage
+.. image:: https://github.com/python-manage/manage/workflows/tests/badge.svg
+   :target: https://github.com/python-manage/manage/actions?query=workflow%3Atests
 
 .. image:: https://readthedocs.org/projects/manage/badge/?version=latest
-        :target: https://manage.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-.. image:: https://pyup.io/repos/github/rochacbruno/manage/shield.svg
-     :target: https://pyup.io/repos/github/rochacbruno/manage/
-     :alt: Updates
+   :target: https://manage.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 
 * Free software: ISC license
